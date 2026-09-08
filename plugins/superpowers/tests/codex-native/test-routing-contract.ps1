@@ -6,8 +6,15 @@ $Resolver = Join-Path $RepoRoot 'scripts\resolve-codex-role.ps1'
 $PowerShellExe = (Get-Process -Id $PID).Path
 
 function Invoke-Resolver([string[]] $Arguments) {
-    $output = & $PowerShellExe -NoProfile -ExecutionPolicy Bypass -File $Resolver @Arguments 2>&1
-    return [pscustomobject]@{ ExitCode = $LASTEXITCODE; Output = @($output) -join "`n" }
+    $savedErrorActionPreference = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        $output = & $PowerShellExe -NoProfile -ExecutionPolicy Bypass -File $Resolver @Arguments 2>&1
+        $exitCode = $LASTEXITCODE
+    } finally {
+        $ErrorActionPreference = $savedErrorActionPreference
+    }
+    return [pscustomobject]@{ ExitCode = $exitCode; Output = @($output) -join "`n" }
 }
 
 foreach ($case in @(

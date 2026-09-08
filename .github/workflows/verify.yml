@@ -6,6 +6,7 @@ on:
 
 env:
   CODEX_VALIDATOR_ROOT: ${{ github.workspace }}/.validator-source/codex-rs/skills/src/assets/samples
+  PYTHONUTF8: 1
 
 jobs:
   linux:
