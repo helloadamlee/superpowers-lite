@@ -235,7 +235,9 @@ try {
     $raceResult = Invoke-Installer -Arguments @('-TargetDir', $raceTarget) -ScriptPath (Join-Path $raceScripts 'install-codex-agents.ps1')
     Assert-Failure $raceResult 'concurrently created destination'
     $null = Wait-Job -Job $RaceJob -Timeout 15
-    $null = Receive-Job -Job $RaceJob
+    if ($RaceJob.State -ne 'Completed') {
+        Fail "concurrent destination watcher ended in state '$($RaceJob.State)'"
+    }
     Remove-Job -Job $RaceJob -Force
     $RaceJob = $null
     [byte[]] $actualMarker = [IO.File]::ReadAllBytes($raceDestination)
