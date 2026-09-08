@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codex Agent Routing"
+  short_description: "Install and verify Superpowers roles"
+  default_prompt: "Install and verify the Superpowers routing roles before delegation."

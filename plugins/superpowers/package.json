@@ -1,0 +1,6 @@
+{
+  "name": "superpowers",
+  "version": "6.4.0",
+  "description": "Codex-only Superpowers skills, role routing, and verification workflow",
+  "type": "module"
+}

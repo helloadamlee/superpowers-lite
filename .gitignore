@@ -1,0 +1,8 @@
+.codex/
+.agents/
+.cocoindex_code/
+.superpowers/
+.worktrees/
+.DS_Store
+node_modules/
+coverage/

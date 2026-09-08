@@ -1,0 +1,9 @@
+Superpowers Lite is a Codex-native adaptation of the MIT-licensed
+obra/superpowers project, forked from the MIT-licensed superpowers-codex
+project, which itself incorporates workflow material from the MIT-licensed
+pcvelz/superpowers fork.
+
+Original copyright notices are retained in
+plugins/superpowers/LICENSE. This repository adds Codex-specific plugin
+packaging, custom-agent role routing, installation checks, public
+documentation, and the process-weight reductions described in CHANGES.md.

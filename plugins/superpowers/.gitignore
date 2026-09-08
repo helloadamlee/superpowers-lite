@@ -1,0 +1,7 @@
+.worktrees/
+.private-journal/
+.codex/
+.superpowers/
+.DS_Store
+node_modules/
+coverage/

@@ -1,0 +1,3 @@
+interface:
+  display_name: "Using Git Worktrees"
+  short_description: "Create worktrees when parallelism or risk needs isolation"

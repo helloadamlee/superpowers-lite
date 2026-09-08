@@ -1,0 +1,76 @@
+name: Verify plugin
+
+on:
+  push:
+  pull_request:
+
+env:
+  CODEX_VALIDATOR_ROOT: ${{ github.workspace }}/.validator-source/codex-rs/skills/src/assets/samples
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out plugin repository
+        uses: actions/checkout@v6
+      - name: Check out pinned Codex validators
+        uses: actions/checkout@v6
+        with:
+          repository: openai/codex
+          ref: c1f1467f3028bd433c8f2063ecc28dd5be206df6
+          path: .validator-source
+          sparse-checkout: |
+            codex-rs/skills/src/assets/samples/skill-creator/scripts
+            codex-rs/skills/src/assets/samples/plugin-creator/scripts
+          sparse-checkout-cone-mode: false
+      - name: Install ripgrep
+        run: sudo apt-get update && sudo apt-get install -y ripgrep
+      - name: Install PyYAML
+        run: python3 -m pip install --disable-pip-version-check PyYAML
+      - name: Run POSIX verification
+        working-directory: plugins/superpowers
+        run: sh scripts/verify-codex-plugin.sh
+
+  windows-powershell-5:
+    runs-on: windows-latest
+    steps:
+      - name: Check out plugin repository
+        uses: actions/checkout@v6
+      - name: Check out pinned Codex validators
+        uses: actions/checkout@v6
+        with:
+          repository: openai/codex
+          ref: c1f1467f3028bd433c8f2063ecc28dd5be206df6
+          path: .validator-source
+          sparse-checkout: |
+            codex-rs/skills/src/assets/samples/skill-creator/scripts
+            codex-rs/skills/src/assets/samples/plugin-creator/scripts
+          sparse-checkout-cone-mode: false
+      - name: Install PyYAML
+        run: py -3 -m pip install --disable-pip-version-check PyYAML
+      - name: Run Windows PowerShell 5.1 verification
+        working-directory: plugins/superpowers
+        shell: powershell
+        run: .\scripts\verify-codex-plugin.ps1
+
+  windows-powershell-7:
+    runs-on: windows-latest
+    steps:
+      - name: Check out plugin repository
+        uses: actions/checkout@v6
+      - name: Check out pinned Codex validators
+        uses: actions/checkout@v6
+        with:
+          repository: openai/codex
+          ref: c1f1467f3028bd433c8f2063ecc28dd5be206df6
+          path: .validator-source
+          sparse-checkout: |
+            codex-rs/skills/src/assets/samples/skill-creator/scripts
+            codex-rs/skills/src/assets/samples/plugin-creator/scripts
+          sparse-checkout-cone-mode: false
+      - name: Install PyYAML
+        run: python -m pip install --disable-pip-version-check PyYAML
+      - name: Run PowerShell 7 verification
+        working-directory: plugins/superpowers
+        shell: pwsh
+        run: .\scripts\verify-codex-plugin.ps1

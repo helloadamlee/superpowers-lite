@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+# Generate a review package containing the committed range plus current index,
+# working-tree, and untracked state. This keeps independent review useful when
+# commits are optional or BASE == HEAD.
+#
+# Usage: review-package PLAN_FILE BASE HEAD [OUTFILE]
+# Default OUTFILE: <repo-root>/.superpowers/sdd/<plan-basename>/review-<base7>..<head7>.diff
+# (named per range, so a re-review after fixes gets a distinct fresh file).
+set -euo pipefail
+
+if [ $# -lt 3 ] || [ $# -gt 4 ]; then
+  echo "usage: review-package PLAN_FILE BASE HEAD [OUTFILE]" >&2
+  exit 2
+fi
+
+plan=$1
+base=$2
+head=$3
+[ -f "$plan" ] || { echo "no such plan file: $plan" >&2; exit 2; }
+
+git rev-parse --verify --quiet "$base" >/dev/null || { echo "bad BASE: $base" >&2; exit 2; }
+git rev-parse --verify --quiet "$head" >/dev/null || { echo "bad HEAD: $head" >&2; exit 2; }
+
+untracked_list=$(mktemp)
+git ls-files --others --exclude-standard -z > "$untracked_list"
+
+if [ $# -eq 4 ]; then
+  out=$4
+else
+  dir=$("$(cd "$(dirname "$0")" && pwd)/sdd-workspace" "$plan")
+  out="$dir/review-$(git rev-parse --short "$base")..$(git rev-parse --short "$head").diff"
+fi
+
+out_dir=$(dirname "$out")
+mkdir -p "$out_dir"
+tmp=$(mktemp "$out_dir/.review-package.XXXXXX")
+trap 'rm -f "$tmp" "$untracked_list"' EXIT
+
+emit_untracked_diff() {
+  local file rc
+  while IFS= read -r -d '' file; do
+    printf '\n### Untracked: %s\n\n' "$file"
+    git diff --no-index --binary -U10 -- /dev/null "$file" || {
+      rc=$?
+      [ "$rc" -eq 1 ] || return "$rc"
+    }
+  done < "$untracked_list"
+}
+
+emit_untracked_names() {
+  local file
+  while IFS= read -r -d '' file; do
+    printf '%s\n' "$file"
+  done < "$untracked_list"
+}
+
+{
+  echo "# Review package: ${base}..${head}"
+  echo
+  echo "## Committed range"
+  echo
+  echo "### Commits"
+  git log --oneline "${base}..${head}"
+  echo
+  echo "### Files changed"
+  git diff --stat "${base}..${head}"
+  echo
+  echo "### Diff"
+  git diff --binary -U10 "${base}..${head}"
+  echo
+  echo "## Staged changes relative to ${head}"
+  echo
+  git diff --cached --stat "$head"
+  echo
+  git diff --cached --binary -U10 "$head"
+  echo
+  echo "## Unstaged changes relative to the index"
+  echo
+  git diff --stat
+  echo
+  git diff --binary -U10
+  echo
+  echo "## Untracked files"
+  emit_untracked_names
+  emit_untracked_diff
+} > "$tmp"
+
+mv "$tmp" "$out"
+rm -f "$untracked_list"
+trap - EXIT
+
+commits=$(git rev-list --count "${base}..${head}")
+staged=$(git diff --cached --name-only "$head" | wc -l | tr -d ' ')
+unstaged=$(git diff --name-only | wc -l | tr -d ' ')
+echo "wrote ${out}: ${commits} commit(s), ${staged} staged, ${unstaged} unstaged, plus captured untracked files, $(wc -c < "$out" | tr -d ' ') bytes"

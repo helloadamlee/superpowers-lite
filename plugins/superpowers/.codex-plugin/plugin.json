@@ -1,0 +1,43 @@
+{
+  "name": "superpowers",
+  "version": "6.4.0+codex.20260908174446",
+  "description": "Codex-native planning, TDD, debugging, deterministic role routing, and fresh review workflows.",
+  "author": {
+    "name": "Superpowers Lite Contributors"
+  },
+  "license": "MIT",
+  "keywords": [
+    "brainstorming",
+    "subagent-driven-development",
+    "skills",
+    "planning",
+    "tdd",
+    "debugging",
+    "code-review",
+    "workflow",
+    "codex",
+    "custom-agents",
+    "model-routing"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Superpowers",
+    "shortDescription": "Codex planning, implementation routing, and review workflows",
+    "longDescription": "Use Superpowers in Codex for brainstorming, implementation planning, test-driven development, deterministic Luna/Terra/Astra delegation, fresh read-only review, and verified delivery.",
+    "developerName": "Superpowers Lite Contributors",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "I've got an idea for something I'd like to build.",
+      "Let's add a feature to this project."
+    ],
+    "brandColor": "#F59E0B",
+    "composerIcon": "./assets/superpowers-small.svg",
+    "logo": "./assets/superpowers-small.svg",
+    "screenshots": []
+  }
+}
