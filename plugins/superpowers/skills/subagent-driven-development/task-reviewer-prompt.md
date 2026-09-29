@@ -77,6 +77,12 @@ Codex spawn_agent (`superpowers_astra_reviewer`, `fork_turns: none`):
     running it. If you cannot run commands in this environment, name the
     test you would run.
 
+    If a report or test log is unreadable, reopen the named file at its stated
+    path. If it is missing, still truncated, or garbled, report an evidence gap
+    and identify the readable report or results the controller needs to supply.
+    Do not rerun tests to regenerate unreadable evidence; a focused test still
+    requires a concrete unresolved doubt about behavior.
+
     Warnings or other noise in the implementer's reported test output are
     findings — test output should be pristine.
 
@@ -90,6 +96,13 @@ Codex spawn_agent (`superpowers_astra_reviewer`, `fork_turns: none`):
       "nice to haves"
     - **Misunderstood:** right feature built the wrong way, wrong problem
       solved
+
+    For batched changes, check each file specifically requested to change
+    against its corresponding implementation in the diff. Report an unimplemented
+    requested change as **Missing**, regardless of the other changes' quality.
+    A justified no-op or unneeded change must be explained and supported by
+    evidence; do not require a cosmetic hunk. Files listed only as context,
+    references, or verification targets need not change.
 
     If a requirement cannot be verified from this diff alone (it lives in
     unchanged code or spans tasks), report it as a ⚠️ item instead of

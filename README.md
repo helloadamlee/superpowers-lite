@@ -8,6 +8,8 @@ delivery without forcing heavyweight process onto small tasks.
 
 - Direct, Light, and Full workflows scale process to the task.
 - Deterministic custom-agent routing never silently substitutes models.
+- Plans preserve approved spec references and provide copyable Codex handoffs.
+- Batch reviews check requested changes and surface missing verification evidence.
 - GPT-6 Astra handles frontier implementation and independent review.
 - GPT-6.1 Sol handles standard implementation; GPT-5.6 Luna handles mechanical work.
 - Linux and Windows PowerShell 7 installers configure the same role policy.
@@ -57,7 +59,7 @@ provisions the validators and runs these checks on Linux and Windows PowerShell 
 These are the supported platforms for this release.
 
 See [CHANGES.md](CHANGES.md) for the differences from the upstream workflow.
-See [RELEASE_NOTES.md](RELEASE_NOTES.md) for 6.4.1 changes and upgrade guidance.
+See [RELEASE_NOTES.md](RELEASE_NOTES.md) for 6.4.2 changes and upgrade guidance.
 
 ## License and provenance
 

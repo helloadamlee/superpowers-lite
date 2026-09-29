@@ -39,6 +39,9 @@ when the requested outcome needs it.
 Every plan records:
 
 - **Goal:** the observable outcome.
+- **Spec (when one exists):** the repository-relative or absolute path to the
+  approved design/requirements document. Keep it linked rather than duplicating it;
+  do not create a spec just to populate this field.
 - **Constraints and decisions:** user choices, compatibility requirements, scope
   exclusions, and invariants.
 - **Approach:** a concise architectural summary and important data flow.
@@ -64,6 +67,8 @@ outcome and let the executor work from current source.
 **Goal:** [observable outcome]
 
 **Approach:** [concise architecture/data-flow summary]
+
+**Spec:** [path to the existing approved design/requirements document, or "none"]
 
 **Constraints and decisions:** [binding requirements; "none" if none]
 
@@ -212,3 +217,24 @@ choices are:
 Do not forbid direct implementation and do not force the user through a choice menu
 when the requested execution mode is already clear. Worktree and review decisions
 remain risk-calibrated at execution time.
+
+### Separate-session handoff
+
+When execution will resume in another session, give a paste-ready prompt containing
+only the execution instructions. Fill in the real plan path and include the spec
+path and author identity when known; omit unavailable fields instead of inventing
+identifiers. Put commentary outside the code block:
+
+```text
+Use superpowers:executing-plans to implement <plan path>.
+Approved spec: <spec path, when present>.
+Plan author: <known session/agent identity, when available>.
+Read the plan and its referenced spec, preserve recorded decisions, and resume at the first incomplete outcome.
+Consult the author for material intent ambiguity only if this host can reach that author; otherwise ask the user a focused question when necessary.
+```
+
+An author label is provenance, not proof of a reachable session. Codex collaboration
+tools may address only agents in the current thread tree; they do not establish
+chat with independently opened sessions. Check actual host capabilities and author
+reachability before consultation. Do not require a live author, force an execution
+menu, or block routine work on author availability.

@@ -37,7 +37,12 @@ independent review.
 
 ## Load and Check the Plan
 
-1. Read the plan and requirements.
+1. Read the plan and requirements. If the plan names a `Spec`, read that document
+   too; resolve repository-relative paths from the project root. Older plans
+   without this field and plans with `Spec: none` remain valid. The referenced
+   spec governs design intent, subject to later explicit user decisions. Surface a
+   material plan/spec conflict or an unavailable required spec before affected work
+   proceeds; continue independent authorized work. Do not silently pick a side.
 2. If present, load `<plan-path>.tasks.json`; restore native tasks only when they are
    useful for resume or delegation.
 3. Resume at the first incomplete outcome. Do not recreate completed work merely
@@ -45,8 +50,12 @@ independent review.
 4. Check the plan against current source and changed facts. Raise only gaps that
    materially block or alter the implementation; resolve ordinary implementation
    detail from the repository.
-5. If another live session authored the plan, consult it only for genuine intent
-   ambiguity rather than guessing or reopening settled decisions.
+5. Use a supplied author identity only when actual host tools can reach that author.
+   Collaboration within the current thread does not imply communication with an
+   independently opened Codex session. Consult a reachable author only for material
+   intent ambiguity; otherwise resolve routine choices from the plan/spec and
+   current source, and ask the user a focused question when necessary. An absent or
+   unreachable author is not itself a blocker.
 
 ## Decide on Isolation
 

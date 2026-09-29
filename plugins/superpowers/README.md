@@ -115,6 +115,24 @@ If a required role or model is unavailable, the workflow pauses. Restore access,
 explicitly change the recorded task tier, or stop; it never silently substitutes a
 model.
 
+## Plans, handoffs, and review evidence
+
+A plan can link an existing approved design with `**Spec:** path/to/design.md`.
+Executors read the plan and its spec, resolve repository-relative paths from the
+project root, and surface material conflicts before affected work proceeds.
+Older plans without a spec remain valid; no extra design document is required.
+
+When work resumes in another session, the planner provides a copyable prompt with
+the plan path, linked spec, and known author identity. Consultation depends on the
+host actually reaching that author. Codex collaboration within one thread does not
+imply communication with separately opened sessions, and an unavailable author does
+not block routine implementation.
+
+Batch reviews check each requested file change, allowing justified no-ops and
+unchanged context files. Reviewers reopen unreadable reports or logs at their named
+paths and report missing evidence for the controller to supply; they do not rerun a
+suite simply to regenerate it.
+
 ## Configure your model policy
 
 The shipped roles are a reference policy. To use different model access or

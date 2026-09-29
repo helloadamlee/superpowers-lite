@@ -1,3 +1,22 @@
+# Superpowers Lite 6.4.2
+
+- Plans can reference an existing approved spec; direct and delegated execution
+  read it and surface material conflicts before affected work proceeds.
+- Separate-session handoffs provide copyable execution instructions with known
+  author identity, respecting Codex host capabilities and thread boundaries.
+- Batch reviews check every requested file change while allowing justified no-ops
+  and context-only files. Missing or unreadable test evidence is reported rather
+  than regenerated through unnecessary test runs.
+- Linux and PowerShell contract checks cover the new instructions. Upstream
+  v6.5.2 concepts are adapted for Codex with provenance retained in NOTICE.
+
+No role models or reasoning settings changed from 6.4.1. Update the plugin and start
+a new Codex task to load the revised skills. Existing 6.4.1 role installations do
+not need reinstalling.
+
+See the [plugin workflow documentation](plugins/superpowers/README.md#plans-handoffs-and-review-evidence)
+and [workflow changes](CHANGES.md).
+
 # Superpowers Lite 6.4.1
 
 A lean Codex-native release with explicit model routing, proportional workflows,

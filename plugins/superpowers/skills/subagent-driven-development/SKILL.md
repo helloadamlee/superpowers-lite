@@ -38,7 +38,11 @@ context. `superpowers:executing-plans` is the lighter default.
 
 ## Setup
 
-Read the plan once and identify constraints, dependencies, risk markers, and
+Read the plan and any referenced `Spec` document (repository-relative paths resolve
+from the project root). Plans without a spec remain valid. Apply design intent and
+later explicit user decisions; surface material conflicts or a missing required spec
+before dispatching affected work, while continuing independent authorized work.
+Identify constraints, dependencies, risk markers, and
 verification scopes. Use native tasks and `<plan>.tasks.json` when they help resume or
 coordination; do not recreate completed work.
 

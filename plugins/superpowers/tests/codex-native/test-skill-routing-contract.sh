@@ -117,6 +117,12 @@ require_text "$repo_root/skills/shared/codex-routing.md" "current platform"
 require_text "$repo_root/skills/subagent-driven-development/SKILL.md" "requires routed mode"
 require_text "$repo_root/skills/dispatching-parallel-agents/SKILL.md" "single-agent mode"
 require_text "$repo_root/skills/writing-plans/SKILL.md" modelTier
+require_text "$repo_root/skills/writing-plans/SKILL.md" '**Spec:**'
+require_text "$repo_root/skills/writing-plans/SKILL.md" '### Separate-session handoff'
+require_text "$repo_root/skills/executing-plans/SKILL.md" 'Spec: none'
+require_text "$repo_root/skills/subagent-driven-development/SKILL.md" 'referenced `Spec`'
+require_text "$repo_root/skills/subagent-driven-development/task-reviewer-prompt.md" 'each file specifically requested to change'
+require_text "$repo_root/skills/subagent-driven-development/task-reviewer-prompt.md" 'reopen'
 require_text "$repo_root/skills/executing-plans/SKILL.md" spawn_agent
 require_text "$repo_root/skills/executing-plans/SKILL.md" "single-agent mode"
 require_text "$repo_root/skills/codex-agent-routing/SKILL.md" "host's callable tool list"
