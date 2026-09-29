@@ -1,6 +1,6 @@
 name = "superpowers_terra_implementer"
 description = "Superpowers standard implementation and integration lane."
-model = "gpt-5.6-terra"
+model = "gpt-6.1-sol"
 model_reasoning_effort = "high"
 
 developer_instructions = """

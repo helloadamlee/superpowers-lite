@@ -5,7 +5,8 @@ description: Establish how Codex discovers and applies Superpowers skills before
 
 # Using Superpowers
 
-Before taking action, identify any applicable skill and load its complete SKILL.md.
+Before taking action, identify skills needed for the task and load their SKILL.md.
+Load supporting references only when the relevant workflow requires them.
 Process skills such as brainstorming, debugging, and test-driven-development come
 before implementation skills. User instructions take precedence over skills.
 
@@ -15,8 +16,9 @@ project:
 - **Direct:** clear, bounded, reversible work. The controller implements directly
   with focused verification. Do not require a redundant design approval, plan,
   worktree, delegation, or independent review.
-- **Light:** a few files or one subsystem with limited ambiguity. Agree on a concise
-  in-chat scope and plan once, then the controller normally implements it. Persist a
+- **Light:** bounded impact with limited ambiguity. Give a concise in-chat scope
+  and plan, honoring authorization already present in the request. Ask only about
+  material unresolved decisions, then the controller normally implements it. Persist a
   plan, delegate, isolate, or request review only when a concrete risk justifies it.
 - **Full:** complex, long, architectural, cross-cutting, or high-risk work. Use a
   persisted design and outcome-oriented plan; use worktrees, delegation, and one
@@ -29,6 +31,17 @@ creating tracker tasks.
 Use `superpowers:subagent-driven-development` or `superpowers:executing-plans` for
 genuinely complex, risky, long, parallel, or explicitly delegated execution. A
 written plan never forbids capable controller execution.
+
+## Follow-through
+
+Define completion by the requested outcome and required evidence. Carry authorized
+work through implementation, verification, and fixes for failures caused by the
+change. Resolve routine choices from project conventions; ask a focused question
+when the answer would change the outcome, scope, or authority. Before requesting
+approval for a later action, prepare the concrete result that can already be produced.
+If a skill requires a pause, name the skill and quote the instruction that applies.
+Use the task-direction guidance in [the routing contract](../shared/codex-routing.md#model-selection-and-task-direction)
+when preparing agent briefs.
 
 ## Codex Tool Mapping
 

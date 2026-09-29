@@ -20,7 +20,7 @@ understand a non-obvious amount of ceremony.
 | Lane | When | Workflow |
 |---|---|---|
 | **Direct** | One clear concern; reversible; no meaningful design fork | Inspect enough context, resolve genuine ambiguity if any, then implement directly. No redundant approval, spec, plan, task checklist, or approaches list. |
-| **Light** | A few files or one subsystem; limited decisions; modest blast radius | Summarize scope, approach, acceptance criteria, and verification in chat. Batch any related questions. Get one approval, then normally implement in the controller. No mandatory document, commit, task tracker, or separate spec review. |
+| **Light** | A few files or one subsystem; limited decisions; modest blast radius | Summarize scope, approach, acceptance criteria, and verification in chat. Honor existing authorization; ask only about unresolved material decisions, then normally implement in the controller. No mandatory document, commit, task tracker, or separate spec review. |
 | **Full** | New subsystem, architectural fork, cross-cutting behavior, long effort, or expensive risk | Explore, compare real alternatives, present the design, persist the approved design, then invoke `superpowers:writing-plans`. |
 
 Default to the least ceremony that safely resolves uncertainty. Escalate when
@@ -49,7 +49,8 @@ The user's clear request is authorization to perform the requested work. Do not 
    - chosen approach and important interfaces;
    - acceptance criteria;
    - verification appropriate to the change.
-5. Ask for one approval of that brief, incorporate requested changes, then implement.
+5. Honor authorization already present in the request. Ask only about unresolved
+   material decisions, incorporate the answers, then implement.
 
 Persist a Light brief only when the user asks, another session must consume it, or
 the decisions are important enough to outlive the conversation. If persisted, an

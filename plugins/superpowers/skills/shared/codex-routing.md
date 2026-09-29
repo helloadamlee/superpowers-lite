@@ -6,9 +6,31 @@ aliases or rely on an omitted role to inherit the coordinator's model.
 | modelTier | agent_type | model | effort |
 | --- | --- | --- | --- |
 | mechanical | superpowers_luna_implementer | gpt-5.6-luna | medium |
-| standard | superpowers_terra_implementer | gpt-5.6-terra | high |
+| standard | superpowers_terra_implementer | gpt-6.1-sol | high |
 | frontier | superpowers_astra_implementer | gpt-6-astra | high |
 | review | superpowers_astra_reviewer | gpt-6-astra | high, read-only |
+
+## Model selection and task direction
+
+GPT-6.1 Sol is the standard implementation default; the existing
+`superpowers_terra_implementer` role name remains stable for plans and resolvers.
+Keep Luna for fully specified mechanical work and Astra for architectural judgment
+and independent review. Preserve the configured effort when changing models;
+raise it only for demonstrated reasoning difficulty, not simply because a model is
+new. Treat this allocation as a starting policy: compare correctness, rework,
+latency, and total task cost on representative tasks before changing another tier.
+OpenAI describes Sol as near-Astra at lower cost, not equivalent on every task.
+See the [Sol model documentation](https://developers.openai.com/api/docs/models/gpt-6.1-sol).
+
+Give each agent the intended outcome, owned files, constraints, completion criteria,
+and required verification. Let it choose routine implementation steps within that
+contract. Load supporting references when the task needs them. Complete authorized
+work and fix failures caused by the change before reporting; ask only when a missing
+decision would materially change the result or exceed authorization. Run the checks
+appropriate to the change and all required gates, then broaden verification only
+for new failures, changes, or unresolved risk. These defaults follow OpenAI's
+[model guidance](https://developers.openai.com/api/docs/guides/latest-model) and
+[skill guidance](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra).
 
 ## Host Capability Gate
 

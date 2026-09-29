@@ -166,6 +166,8 @@ foreach ($role in @(
 )) {
     Require-Text (Join-Path $repoRoot $role) 'never spawn'
 }
+Require-Text (Join-Path $repoRoot 'agents/superpowers-terra-implementer.toml') 'model = "gpt-6.1-sol"'
+Require-Text (Join-Path $repoRoot 'agents/superpowers-terra-implementer.toml') 'model_reasoning_effort = "high"'
 Require-Text (Join-Path $repoRoot 'agents/superpowers-astra-implementer.toml') 'model = "gpt-6-astra"'
 Require-Text (Join-Path $repoRoot 'agents/superpowers-astra-reviewer.toml') 'model = "gpt-6-astra"'
 Require-Text (Join-Path $repoRoot 'agents/superpowers-astra-implementer.toml') 'name = "superpowers_astra_implementer"'

@@ -67,7 +67,7 @@ Resolve task `modelTier` with `scripts/resolve-codex-role.sh` on POSIX or
 `.\scripts\resolve-codex-role.ps1` on Windows:
 
 - `mechanical` -> `superpowers_luna_implementer` (`gpt-5.6-luna`, medium)
-- `standard` -> `superpowers_terra_implementer` (`gpt-5.6-terra`, high)
+- `standard` -> `superpowers_terra_implementer` (`gpt-6.1-sol`, high)
 - `frontier` -> `superpowers_astra_implementer` (`gpt-6-astra`, high)
 - independent review -> `superpowers_astra_reviewer` (`gpt-6-astra`, high, read-only)
 

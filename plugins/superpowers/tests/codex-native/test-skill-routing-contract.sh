@@ -183,6 +183,8 @@ for role in \
   "$repo_root/agents/superpowers-astra-reviewer.toml"; do
   require_text "$role" "never spawn"
 done
+require_text "$repo_root/agents/superpowers-terra-implementer.toml" 'model = "gpt-6.1-sol"'
+require_text "$repo_root/agents/superpowers-terra-implementer.toml" 'model_reasoning_effort = "high"'
 require_text "$repo_root/agents/superpowers-astra-implementer.toml" 'model = "gpt-6-astra"'
 require_text "$repo_root/agents/superpowers-astra-reviewer.toml" 'model = "gpt-6-astra"'
 require_text "$repo_root/agents/superpowers-astra-implementer.toml" 'name = "superpowers_astra_implementer"'

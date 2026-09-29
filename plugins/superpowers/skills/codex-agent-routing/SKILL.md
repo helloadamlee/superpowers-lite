@@ -34,7 +34,7 @@ from whether Codex is running in the CLI or an IDE.
 Routing is deterministic:
 
 - mechanical -> superpowers_luna_implementer -> gpt-5.6-luna / medium
-- standard -> superpowers_terra_implementer -> gpt-5.6-terra / high
+- standard -> superpowers_terra_implementer -> gpt-6.1-sol / high
 - frontier -> superpowers_astra_implementer -> gpt-6-astra / high
 - review -> superpowers_astra_reviewer -> gpt-6-astra / high / read-only
 
