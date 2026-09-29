@@ -1,6 +1,6 @@
 {
   "name": "superpowers",
-  "version": "6.4.0+codex.20260908174446",
+  "version": "6.4.1",
   "description": "Codex-native planning, TDD, debugging, deterministic role routing, and fresh review workflows.",
   "author": {
     "name": "Superpowers Lite Contributors"
@@ -23,7 +23,7 @@
   "interface": {
     "displayName": "Superpowers",
     "shortDescription": "Codex planning, implementation routing, and review workflows",
-    "longDescription": "Use Superpowers in Codex for brainstorming, implementation planning, test-driven development, deterministic Luna/Terra/Astra delegation, fresh read-only review, and verified delivery.",
+    "longDescription": "Use Superpowers in Codex for planning, implementation with GPT-6.1 Sol, mechanical work with Luna, architecture and independent review with Astra, and verified delivery.",
     "developerName": "Superpowers Lite Contributors",
     "category": "Developer Tools",
     "capabilities": [

@@ -107,7 +107,7 @@ if (-not (Test-Path -LiteralPath $Workflow -PathType Leaf)) {
     Fail "verification workflow is missing: $Workflow"
 }
 $workflowText = [IO.File]::ReadAllText($Workflow)
-foreach ($jobId in @('linux', 'windows-powershell-5', 'windows-powershell-7')) {
+foreach ($jobId in @('linux', 'windows-powershell-7')) {
     if ($workflowText.IndexOf("  $jobId`:", [StringComparison]::Ordinal) -lt 0) {
         Fail "verification workflow is missing job: $jobId"
     }

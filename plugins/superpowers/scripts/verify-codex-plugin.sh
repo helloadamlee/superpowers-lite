@@ -59,7 +59,7 @@ done
 
 workflow=$repo_root/../../.github/workflows/verify.yml
 [ -f "$workflow" ] || fail "verification workflow is missing: $workflow"
-for job_id in linux windows-powershell-5 windows-powershell-7; do
+for job_id in linux windows-powershell-7; do
   grep -q "^  $job_id:\$" "$workflow" ||
     fail "verification workflow is missing job: $job_id"
 done

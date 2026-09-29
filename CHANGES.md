@@ -1,100 +1,86 @@
 # Changes from superpowers-codex
 
-`superpowers-lite` is a fork of `superpowers-codex` that removes process
-overhead written to compensate for weaker models rationalizing their way out
-of discipline. That overhead doesn't pay for itself against current frontier
-models on small or medium tasks. Nothing about verification, review
-independence, or context hygiene was loosened — those get more valuable as
-models get more capable of writing plausible-sounding false claims, not less.
+`superpowers-lite` adapts the upstream workflow for Codex with process scaled to
+the consequences of the task. Clear requests proceed through implementation and
+verification; design documents, delegation, and independent review are used where
+they address a concrete risk.
 
-## 1. Brainstorming got a lane triage
+## Direct, Light, and Full workflows
 
-`skills/brainstorming/SKILL.md` no longer runs the full
-explore → questions → approaches → design doc → spec review → user-review →
-writing-plans pipeline for every request regardless of size. It now triages
-into three lanes before asking anything:
+- **Direct:** clear, bounded, reversible work. Inspect the relevant context and
+  implement with focused verification. No redundant scope confirmation or approval.
+- **Light:** limited decisions and understood interfaces. Summarize scope,
+  approach, acceptance criteria, and verification in chat, then implement under
+  existing authorization. Persist a document or ask for approval only when the user
+  requests it or an unresolved material decision requires it.
+- **Full:** architectural, cross-cutting, long, or high-risk work. Develop and
+  approve the design, persist it, and write an outcome-oriented implementation plan.
+  Use isolation, delegation, and one final independent whole-diff review when their
+  prerequisites are met.
 
-- **Direct** — single-file, reversible, no real ambiguity: implement after a
-  one-line scope confirmation. No spec doc, no plan doc.
-- **Light** — a few files or one subsystem: one combined spec+plan doc, one
-  batched round of questions, one approval gate.
-- **Full** — new subsystem or genuine architectural ambiguity: the original
-  full process.
+Risk and uncertainty determine the lane; file count alone does not. A written plan
+does not require delegating every task. The controller normally handles Direct and
+Light work.
 
-The old skill treated "this is too simple to need a design" as the anti-pattern
-to guard against unconditionally. The anti-pattern is real, but the fix isn't
-running the same four-gate process on a config change as on a new subsystem.
+## Questions and alternatives
 
-## 2. Clarifying questions are batched, not one-per-message
+Batch independent questions into one round-trip. Ask a later question separately
+only when its framing depends on an earlier answer. Honor decisions already made
+by the user and resolve ordinary implementation choices from project conventions.
 
-The original required exactly one question per chat message. Batched
-multi-select questions (a single `AskUserQuestion` call carrying several
-independent questions) resolve the same decisions in one round-trip. Split
-into a second round only when a later question's framing genuinely depends
-on an earlier answer.
+Compare approaches when there is a real design fork. A clear approach does not need
+manufactured alternatives or another approval cycle.
 
-## 3. "Propose 2-3 approaches" is conditional
+## Proportional testing
 
-Only proposed when there's a real fork — genuinely different architectures
-with different trade-offs. When one approach is clearly correct, the skill
-now says so and explains why, instead of manufacturing alternatives to
-compare against.
+Test-first development remains the default for reproducible bugs and nontrivial
+behavior changes. Documentation, configuration, generated output, mechanical
+edits, simple glue, and covered refactors use focused existing evidence appropriate
+to the change. Add tests when they catch a durable regression risk.
 
-## 4. Redundant DOT graphs removed
+If implementation precedes a needed test, backfill proof: write the test, confirm
+it passes, deliberately break the relevant behavior, confirm the expected failure,
+then restore and rerun. Mutation backfill is recovery evidence, not routine ceremony
+after a successful test-first cycle.
 
-Six skill files carried Graphviz `digraph` blocks that restated the
-surrounding prose almost verbatim — about 170 lines, several of them full
-duplicates of an adjacent numbered list. These helped weaker models lock in
-step ordering. They're gone; the same branching is stated once, in prose, in
-`brainstorming`, `dispatching-parallel-agents`, `subagent-driven-development`,
-and `systematic-debugging/{condition-based-waiting,root-cause-tracing}.md`.
+Run the full suite at the integration boundary. Repeat or broaden evidence when a
+later change invalidates it or a specific unresolved risk requires it.
 
-## 5. TDD: mutation-check backfill instead of mandatory delete-and-restart
+## Review and fixes
 
-`skills/test-driven-development/SKILL.md`'s Iron Law previously required
-deleting any code written before its test, no exceptions, even if the code
-was correct. The lite version defaults to a cheaper proof: write the test,
-confirm it passes, then deliberately break the implementation (comment out
-the logic, invert a condition) and confirm the test now fails for the right
-reason. That's the same guarantee test-first gives — the test provably
-catches the bug — without discarding working code. Full delete-and-restart
-is still there for code that isn't trustworthy (unclear intent, written
-under enough pressure that correctness is itself in doubt, or the mutation
-check fails to catch the deliberate break).
+Direct work has no default independent review. Light work gets a final review when
+substantive risk warrants it. Full delegated work gets one fresh independent
+whole-diff review. Per-task review is required only at an explicit
+`highRiskBoundary: true` boundary before dependent work.
 
-Also: refactoring — behavior-preserving change under tests that already
-cover it — was pulled out of the "always TDD" list. Red-green-refactor
-doesn't apply to a change with no new behavior; the tests it runs against
-already exist. Refactoring code with no covering test is a bug-fix/feature
-situation (add the missing test first), not a refactor.
+Fix mechanical findings inline with format or static evidence and no re-review.
+Substantive fixes receive verification matching their impact and, when warranted,
+one scoped re-review of the fix diff. There is one substantive fix wave per review;
+surface unresolved load-bearing findings instead of repeating review/fix rounds or
+silently escalating models.
 
-## 6. Fix-loop escalation moved to the first failed review
+## Codex routing
 
-`skills/subagent-driven-development/SKILL.md`'s fix loop previously resumed
-the same implementer for three rounds before escalating to a fresh
-implementer on a more capable model in rounds 4-5. The lite version escalates
-after round 1: round 1 resumes the original implementer with the findings,
-and round 2 (if needed) goes straight to a fresh implementer on a more
-capable model. A same-model retry after one failed review tends to reproduce
-the same blind spot; there's little reason to pay for two more attempts
-before trying a different model.
+Delegation uses exact custom roles with fresh context. Mechanical work uses
+GPT-5.6 Luna at medium effort; standard implementation uses GPT-6.1 Sol at high
+effort through the stable `superpowers_terra_implementer` role; frontier
+implementation and independent review use GPT-6 Astra at high effort.
 
-## 7. Fix-loop cap reduced from 5 rounds to 2
+Check host capability and installed roles before dispatch. If delegation is
+unavailable, announce single-agent mode where the task permits it. If a required
+role or model is unavailable, report the exact failure and request restoration, an
+explicit tier change, or a stop. Never silently substitute a role or model.
 
-A task that still fails review after round 2 (one same-model retry, one
-capability escalation) is treated as a plan or spec problem, not an
-implementer problem — the breaker trips and findings get adjudicated
-(parked with a ruling, or the task is marked BLOCKED for load-bearing
-issues) rather than burning three more rounds. This lowers the worst-case
-cost per task from up to 5 fix-dispatch + re-review pairs to 2.
+Implementers and reviewers are leaf agents. The controller owns dispatch,
+acceptance, integration, and any required independent review.
 
-## What stayed the same, deliberately
+## Evidence and context hygiene
 
-- File-based brief/report/review-package handoffs between controller and
-  subagents — context hygiene matters more as tasks get longer, not less.
-- `verification-before-completion`'s evidence-before-claims gate — stronger
-  models produce more plausible false claims, so this check doesn't decay.
-- The rule against pre-judging reviewer findings ("don't tell a reviewer what
-  not to flag").
-- The final whole-branch review as a separate pass from per-task review —
-  integration defects only surface there.
+File-based briefs, reports, and review packages carry requirements and evidence
+between sessions without copying accumulated controller history. Verification
+claims need actual, applicable output, including failed or unavailable checks.
+Review packages cover committed, staged, unstaged, and untracked work so a review
+can inspect the real change even before a commit.
+
+See the [plugin README](plugins/superpowers/README.md) for installation, model
+policy, supported platforms, and reproducible developer checks.

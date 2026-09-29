@@ -7,10 +7,12 @@ roles rather than inheriting an arbitrary session model.
 
 ## Requirements
 
+- Supported platforms: Linux and Windows with PowerShell 7. The POSIX scripts
+  remain available for other POSIX environments, but CI covers Linux only.
 - Codex with plugin support. Custom-agent support is required for routed delegation;
   direct workflows can run in explicit single-agent mode.
-- Access to the configured GPT-6 Astra and GPT-5.6 model lanes, or a local edit to the role
-  templates under `agents/` that matches your available models.
+- Access to the configured GPT-6 Astra, GPT-6.1 Sol, and GPT-5.6 Luna model lanes,
+  or a local edit to the role templates under `agents/` that matches your available models.
 
 ## Installation
 
@@ -32,7 +34,7 @@ sh scripts/install-codex-agents.sh
 sh scripts/install-codex-agents.sh --check
 ```
 
-Windows PowerShell 5.1 and PowerShell 7:
+Windows PowerShell 7:
 
 ```powershell
 Set-Location C:\absolute\path\to\superpowers-lite\plugins\superpowers
@@ -48,14 +50,54 @@ whether `spawn_agent` delegation is available.
 
 Start a new Codex task after installation so the custom roles are discovered.
 
+## Upgrade existing roles
+
+The installer refuses to overwrite a role that differs from the shipped template,
+including an unchanged role from an older release. For 6.4.1, the standard role
+changes from Terra to Sol while keeping the `superpowers_terra_implementer` name.
+
+1. Find your installed roles in `CODEX_HOME/agents` if `CODEX_HOME` is set,
+   otherwise `~/.codex/agents` on Linux or `$env:USERPROFILE\.codex\agents` on Windows.
+   If you installed with a custom target directory, use that directory.
+2. Back up only these four Superpowers files to a separate directory:
+   `superpowers-luna-implementer.toml`, `superpowers-terra-implementer.toml`,
+   `superpowers-astra-implementer.toml`, and `superpowers-astra-reviewer.toml`.
+3. Compare the backup with the new `agents/` templates. Review any local
+   customizations and apply the settings you want to retain to the templates.
+4. Move only those four installed files aside, retaining the backup. Leave other
+   custom roles in place; never delete the entire agents directory.
+5. From the plugin directory, rerun installation and its check:
+
+Linux / POSIX:
+
+```bash
+sh scripts/install-codex-agents.sh
+sh scripts/install-codex-agents.sh --check
+```
+
+Windows PowerShell 7:
+
+```powershell
+.\scripts\install-codex-agents.ps1
+.\scripts\install-codex-agents.ps1 -Check
+```
+
+For a custom destination, pass `--target-dir /path/to/agents` or
+`-TargetDir C:\path\to\agents` to both commands. Start a new Codex task afterward.
+
 ## Routing
 
 | Tier | Role | Default model | Effort | Use |
 | --- | --- | --- | --- | --- |
 | mechanical | `superpowers_luna_implementer` | `gpt-5.6-luna` | medium | Fully specified bounded work |
-| standard | `superpowers_terra_implementer` | `gpt-5.6-terra` | high | Integration and debugging |
+| standard | `superpowers_terra_implementer` | `gpt-6.1-sol` | high | Integration and debugging |
 | frontier | `superpowers_astra_implementer` | `gpt-6-astra` | high | Broad judgment or architecture |
 | review | `superpowers_astra_reviewer` | `gpt-6-astra` | high, read-only | Fresh diff review |
+
+The controller handles routine work directly. Delegated mechanical work needs a
+precise brief; standard work needs integration and debugging judgment; frontier
+work needs broader architectural judgment. Independent review uses a fresh Astra
+context. Role names stay stable as the template model policy evolves.
 
 Plan tasks declare `modelTier`. The execution workflow resolves it to an exact
 `agent_type`, passes a structured brief, and dispatches with `fork_turns: none`.
@@ -83,22 +125,42 @@ policy.
 
 ## Development checks
 
-From this plugin directory, run the native full verifier for your platform:
+The verifier uses canonical Codex validators from `CODEX_VALIDATOR_ROOT`, falling
+back to `CODEX_HOME/skills/.system` (or `~/.codex/skills/.system`). A Codex installation
+may not include both validators. For reproducible local checks, use the same pinned
+Codex checkout as CI: revision `c1f1467f3028bd433c8f2063ecc28dd5be206df6`, with the
+validator root at `codex-rs/skills/src/assets/samples`.
+
+Linux needs Git, Python 3 with PyYAML, jq, ripgrep, Bash, and sh. Prepare a separate
+validator checkout, then run the verifier from this plugin directory:
 
 ```bash
+git clone --filter=blob:none --no-checkout https://github.com/openai/codex.git /absolute/path/to/codex-validators
+git -C /absolute/path/to/codex-validators sparse-checkout set --no-cone codex-rs/skills/src/assets/samples
+git -C /absolute/path/to/codex-validators checkout c1f1467f3028bd433c8f2063ecc28dd5be206df6
+python3 -m pip install PyYAML
+export CODEX_VALIDATOR_ROOT=/absolute/path/to/codex-validators/codex-rs/skills/src/assets/samples
+cd /absolute/path/to/superpowers-lite/plugins/superpowers
 sh scripts/verify-codex-plugin.sh
 ```
 
-Windows PowerShell 5.1 and PowerShell 7:
+Windows PowerShell 7 needs Git and Python 3 with PyYAML:
 
 ```powershell
+git clone --filter=blob:none --no-checkout https://github.com/openai/codex.git C:\absolute\path\to\codex-validators
+git -C C:\absolute\path\to\codex-validators sparse-checkout set --no-cone codex-rs/skills/src/assets/samples
+git -C C:\absolute\path\to\codex-validators checkout c1f1467f3028bd433c8f2063ecc28dd5be206df6
+py -3 -m pip install PyYAML
+$env:CODEX_VALIDATOR_ROOT = 'C:\absolute\path\to\codex-validators\codex-rs\skills\src\assets\samples'
+Set-Location C:\absolute\path\to\superpowers-lite\plugins\superpowers
 .\scripts\verify-codex-plugin.ps1
 ```
 
 The verifier validates the manifest, skills, role installer, routing contract, and
-absence of non-Codex runtime files. The Windows path needs Python 3 with PyYAML for
-the canonical Codex validators; it does not require Bash, WSL, jq, grep, find,
-Pester, or any third-party PowerShell module.
+absence of non-Codex runtime files. CI provisions the pinned validators automatically.
+The Windows verifier does not require Bash, WSL, jq, grep, find, Pester, or any
+third-party PowerShell module. Windows PowerShell 5.1 is outside this release's
+support and CI matrix; the existing `.ps1` implementation is retained.
 
 ## License and provenance
 
