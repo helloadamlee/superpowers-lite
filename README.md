@@ -4,6 +4,8 @@ A streamlined, Codex-native edition of Superpowers: structured planning,
 test-driven development, systematic debugging, multi-agent execution, and verified
 delivery without forcing heavyweight process onto small tasks.
 
+> Using Claude Code instead of Codex? See the [Claude Code edition](claude/README.md).
+
 ## Highlights
 
 - Direct, Light, and Full workflows scale process to the task.
