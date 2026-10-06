@@ -1,0 +1,17 @@
+{
+  "name": "superpowers-lite",
+  "owner": {
+    "name": "Superpowers Lite Contributors"
+  },
+  "metadata": {
+    "description": "Superpowers Lite workflows for Claude Code: proportional planning, TDD, debugging, tiered subagents, and verified delivery."
+  },
+  "plugins": [
+    {
+      "name": "superpowers-lite",
+      "source": "./claude",
+      "description": "Claude Code-native planning, TDD, debugging, model-tiered subagents, and fresh independent review.",
+      "category": "development"
+    }
+  ]
+}

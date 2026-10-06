@@ -1,0 +1,6 @@
+{
+  "name": "superpowers",
+  "version": "0.1.0",
+  "description": "Claude Code-native Superpowers skills, model-tiered subagents, and verification workflow",
+  "type": "module"
+}

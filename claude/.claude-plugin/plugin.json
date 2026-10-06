@@ -1,0 +1,23 @@
+{
+  "name": "superpowers-lite",
+  "displayName": "Superpowers Lite",
+  "version": "0.1.0",
+  "description": "Claude Code-native planning, TDD, debugging, model-tiered subagents, and fresh independent review, scaled to the risk of the task.",
+  "author": {
+    "name": "Superpowers Lite Contributors"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/helloadamlee/superpowers-lite",
+  "keywords": [
+    "brainstorming",
+    "subagent-driven-development",
+    "skills",
+    "planning",
+    "tdd",
+    "debugging",
+    "code-review",
+    "workflow",
+    "subagents",
+    "model-routing"
+  ]
+}

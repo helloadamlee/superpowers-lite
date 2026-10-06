@@ -1,0 +1,14 @@
+Superpowers Lite for Claude Code is a Claude Code adaptation of Superpowers Lite, which
+is a Codex-native adaptation of the MIT-licensed obra/superpowers project, forked from
+the MIT-licensed superpowers-codex project, which itself incorporates workflow material
+from the MIT-licensed pcvelz/superpowers fork.
+
+Original copyright notices are retained in LICENSE. This edition adds Claude Code plugin
+packaging, model-tiered subagent definitions with a Fable-to-Opus fallback contract,
+validation tests, and the instruction-style updates described in CHANGES.md.
+
+Plan/spec references, batch-review completeness, evidence-gap handling, and optional
+plan-author handoffs adapt workflow concepts from pcvelz/superpowers v6.5.2
+(commit f926482ac12672eb7a4cbb693975fcc991f2653f), specifically
+skills/writing-plans/SKILL.md and
+skills/subagent-driven-development/task-reviewer-prompt.md.

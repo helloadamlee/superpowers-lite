@@ -1,0 +1,6 @@
+{
+  "hookSpecificOutput": {
+    "hookEventName": "SessionStart",
+    "additionalContext": "Superpowers Lite is installed. Match process to the task: Direct (clear, bounded, reversible: implement and verify), Light (a few decisions: brief in-chat scope, then implement), Full (architectural or high-risk: persisted design and plan, isolation, one final independent review). Load superpowers-lite:using-superpowers with the Skill tool when starting non-trivial work, and use the other superpowers-lite skills when their descriptions match. Delegate through the Agent tool with superpowers-lite:* subagent types only when isolation, parallelism, or independent review is worth the cost."
+  }
+}
