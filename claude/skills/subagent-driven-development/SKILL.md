@@ -69,7 +69,7 @@ ledger and Git history after compaction. Never reuse another plan's workspace.
 Resolve each task's `modelTier` with the table in
 [the routing contract](../shared/claude-routing.md):
 
-- `mechanical` -> `superpowers-lite:mechanical-implementer` (Haiku 4.5, medium)
+- `mechanical` -> `superpowers-lite:mechanical-implementer` (Haiku 5.5, medium)
 - `standard` -> `superpowers-lite:standard-implementer` (Sonnet 5.5, high)
 - `frontier` -> `superpowers-lite:frontier-implementer` (Fable 5.1, high; falls back to Opus 5.5)
 - independent review -> `superpowers-lite:reviewer` (Fable 5.1, high, read-only; falls back to Opus 5.5)

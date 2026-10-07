@@ -7,14 +7,16 @@ Each agent file pins its own model and effort, so the policy lives in one place
 
 | modelTier | subagent_type | model alias | effort | Fallback |
 | --- | --- | --- | --- | --- |
-| mechanical | `superpowers-lite:mechanical-implementer` | `haiku` (Haiku 4.5) | medium | none |
+| mechanical | `superpowers-lite:mechanical-implementer` | `haiku` (Haiku 5.5) | medium | none |
 | standard | `superpowers-lite:standard-implementer` | `sonnet` (Sonnet 5.5) | high | none |
 | frontier | `superpowers-lite:frontier-implementer` | `fable` (Fable 5.1) | high | `opus` (Opus 5.5) |
 | review | `superpowers-lite:reviewer` | `fable` (Fable 5.1) | high, read-only | `opus` (Opus 5.5) |
 
 Aliases resolve to the current model for the user's provider, so the same plugin works
-on the Anthropic API, Bedrock, and Vertex. To pin an exact version, edit `model:` in the
-agent file to a full model ID.
+on the Anthropic API, Bedrock, and Vertex. The model names in the table are what the
+aliases resolved to when this was written (Claude Code 2.1.293); an older Claude Code
+or a provider pinned to older versions may resolve `haiku` to an earlier Haiku. To pin
+an exact version, edit `model:` in the agent file to a full model ID.
 
 ## Choosing a lane
 
@@ -104,6 +106,10 @@ provider). Only those two lanes have a fallback, and it is explicit rather than 
 The mechanical and standard lanes have no automatic fallback. If their model is
 unavailable, stop and offer the same three choices rather than moving the task to another
 model on your own.
+
+A refusal (`stop_reason: refusal` from a safety classifier) is not a model-access
+failure and never triggers the fallback. Report it as a refusal with its category and
+rephrase or rescope the brief; Haiku 5.5 in particular has no server-side fallback for it.
 
 Do not use the fallback to hide a different problem: a missing agent type, a malformed
 brief, or a task failure is reported as what it is.

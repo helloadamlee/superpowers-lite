@@ -24,7 +24,7 @@ changed is the host integration and the instruction style.
 
 | Tier | Codex edition | Claude Code edition |
 | --- | --- | --- |
-| mechanical | GPT-5.6 Luna, medium | Haiku 4.5, medium |
+| mechanical | GPT-5.6 Luna, medium | Haiku 5.5, medium |
 | standard | GPT-6.1 Sol, high | Sonnet 5.5, high |
 | frontier | GPT-6 Astra, high | Fable 5.1, high; falls back to Opus 5.5 |
 | review | GPT-6 Astra, high, read-only | Fable 5.1, high, no edit tools; falls back to Opus 5.5 |

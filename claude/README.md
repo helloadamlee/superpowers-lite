@@ -19,7 +19,7 @@ in `../plugins/superpowers` and shares none of its runtime.
 
 | Tier | Agent (`subagent_type`) | Model | Effort | Use | Fallback |
 | --- | --- | --- | --- | --- | --- |
-| mechanical | `superpowers-lite:mechanical-implementer` | Haiku 4.5 | medium | Small, fully specified work | none |
+| mechanical | `superpowers-lite:mechanical-implementer` | Haiku 5.5 | medium | Small, fully specified work | none |
 | standard | `superpowers-lite:standard-implementer` | Sonnet 5.5 | high | Integration and debugging | none |
 | frontier | `superpowers-lite:frontier-implementer` | Fable 5.1 | high | Broad judgment, architecture | Opus 5.5 |
 | review | `superpowers-lite:reviewer` | Fable 5.1 | high, read-only | Fresh, independent diff review | Opus 5.5 |
